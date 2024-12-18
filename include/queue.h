@@ -149,6 +149,10 @@ typedef struct QueueDefinition   * QueueSetMemberHandle_t;
     #define xQueueCreate( uxQueueLength, uxItemSize )    xQueueGenericCreate( ( uxQueueLength ), ( uxItemSize ), ( queueQUEUE_TYPE_BASE ) )
 #endif
 
+#if (configUSE_CBS == 1)
+QueueHandle_t xCBSGetServerQueue(TaskHandle_t xTask);
+#endif /* configUSE_CBS */
+
 /**
  * queue. h
  * @code{c}

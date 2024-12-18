@@ -1872,6 +1872,7 @@ BaseType_t xQueueSemaphoreTake( QueueHandle_t xQueue,
         }
     }
 }
+
 /*-----------------------------------------------------------*/
 
 BaseType_t xQueuePeek( QueueHandle_t xQueue,

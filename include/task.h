@@ -234,6 +234,58 @@ typedef enum
     #define taskENTER_CRITICAL_FROM_ISR()    portENTER_CRITICAL_FROM_ISR()
 #endif
 
+#if ( configUSE_EDF == 1 )
+
+/**
+ * @brief Creates a new task and adds it to the list of tasks that are ready to run.
+ *
+ * @param pxTaskCode     Pointer to the task entry function.
+ * @param pcName         A descriptive name for the task.
+ * @param usStackDepth   The size of the task stack specified as the number of variables the stack can hold.
+ * @param pvParameters   Pointer that will be used as the parameter for the task being created.
+ * @param pxCreatedTask  Used to pass back a handle by which the created task can be referenced.
+ * @param xDeadline      The relative deadline for the task in ticks.
+ *
+ * @return pdPASS if the task was created successfully, otherwise an error code.
+ */
+BaseType_t xTaskCreateEDF( TaskFunction_t pxTaskCode,
+                           const char * const pcName,
+                           const configSTACK_DEPTH_TYPE usStackDepth,
+                           void * pvParameters,
+                           TaskHandle_t * pxCreatedTask,
+                           TickType_t xDeadline );
+
+void vTaskSetAbsoluteDeadline(TaskHandle_t xTask, TickType_t xDeadline);
+
+TickType_t xTaskGetRelativeDeadline(TaskHandle_t xTask);
+#endif /* configUSE_EDF */
+
+#if(configUSE_CBS == 1)
+/**
+ * @brief Create a CBS server task.
+ *
+ * @param pxTaskCode     The task function.
+ * @param pcName         A descriptive name for the task.
+ * @param usStackDepth   The stack size in words.
+ * @param pvParameters   Pointer that will be used as the parameter for the task.
+ * @param xServerPeriod  The server period (Ts).
+ * @param xServerMaxBudget The max budget (Qs).
+ * @param pxCreatedTask  Used to return a handle by which the created task can be referenced.
+ *
+ * @return BaseType_t    pdPASS if successful, otherwise an error code.
+ */
+BaseType_t xTaskCreateCBS(TaskFunction_t pxTaskCode,
+                          const char * const pcName,
+                          const configSTACK_DEPTH_TYPE usStackDepth,
+                          void * const pvParameters,
+                          TickType_t xServerPeriod,
+                          TickType_t xServerMaxBudget,
+                          TaskHandle_t * const pxCreatedTask);
+
+
+#endif /* configUSE_CBS */
+
+
 /**
  * task. h
  *
